@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pl" data-theme="tree">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skarby Dolnego Śląska – Minerały i Skamieniałości</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ==========================================================================
+           DEFINICJE PALET KOLORYSTYCZNYCH (ZMIENNE CSS)
+           ========================================================================== */
+        
+        /* 1. DOMYŚLNY MOTYW: ZIEMIA I NATURALNE DREWNO */
+        html[data-theme="tree"] {
+            --bg-body: #1c1917;         /* Warm stone dark */
+            --bg-card: #292524;         /* Stone card */
+            --bg-inner-img: #ffffff;    /* Tło dla minerału */
+            --text-main: #f5f5f4;       /* Jasny kremowy */
+            --text-muted: #d6d3d1;      /* Stonowany szary */
+            --accent-main: #d97706;     /* Bursztynowy / Ochra */
+            --accent-light: #fef3c7;    /* Jasnożółty akcent */
+            --border-card: #44403c;     /* Naturalna ramka */
+            --highlight-box: #78350f;   /* Ciepła Porada Detektywa */
+            --btn-active: #d97706;
+            --btn-active-text: #ffffff;
+        }
+
+        /* 2. MOTYW HYPER-KONTRAST (Dla Słabowidzących i Percepcji Wzrokowej) */
+        html[data-theme="high-contrast"] {
+            --bg-body: #000000;         /* Czysta czerń */
+            --bg-card: #121212;         /* Głęboka czerń karty */
+            --bg-inner-img: #ffffff;    /* Tło obrazu z czarną ramką */
+            --text-main: #ffffff;       /* Czysta biel */
+            --text-muted: #e0e0e0;      /* Jasnoszary */
+            --accent-main: #ffff00;     /* Żółć fluorescencyjna */
+            --accent-light: #00ffff;    /* Błękit fluorescencyjny */
+            --border-card: #ffff00;     /* Gruba, żółta ramka */
+            --highlight-box: #1e1b4b;   /* Ciemny granat kontrastowy */
+            --btn-active: #ffff00;
+            --btn-active-text: #000000;
+        }
+
+        /* 3. MOTYW SPOKOJNA SZAŁWIA / SOFT FOCUS (ADHD & Spektrum / Anti-Glaim) */
+        html[data-theme="sage"] {
+            --bg-body: #1a2e26;         /* Ciemna, głęboka zielona szałwia */
+            --bg-card: #243c32;         /* Miękka karta zielona */
+            --bg-inner-img: #f0fdf4;    /* Bardzo blada miętowa biel */
+            --text-main: #f0fdf4;       /* Pastelowa biel */
+            --text-muted: #bbf7d0;      /* Miękka miętowa czcionka */
+            --accent-main: #34d399;     /* Szałwiowy seledyn */
+            --accent-light: #a7f3d0;    /* Jasna miętowa zieleń */
+            --border-card: #365347;     /* Subtelny zielonkawy obrys */
+            --highlight-box: #14532d;   /* Ciepły leśny boks porady */
+            --btn-active: #34d399;
+            --btn-active-text: #064e3b;
+        }
+
+        /* 4. MOTYW AI: CHŁODNY GRANAT I CYJAN */
+        html[data-theme="ai"] {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-inner-img: #f8fafc;
+            --text-main: #f1f5f9;
+            --text-muted: #cbd5e1;
+            --accent-main: #38bdf8;
+            --accent-light: #bae6fd;
+            --border-card: #334155;
+            --highlight-box: #0c4a6e;
+            --btn-active: #38bdf8;
+            --btn-active-text: #082f49;
+        }
+
+        /* Użycie zmiennych w elementach strony */
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Nunito', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-card {
+            background-color: var(--bg-card);
+            border: 2px solid var(--border-card);
+            transition: all 0.2s ease;
+        }
+
+        .theme-card:hover {
+            border-color: var(--accent-main);
+            transform: translateY(-3px);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-btn {
+            background-color: var(--bg-card);
+            border: 2px solid var(--border-card);
+            color: var(--text-main);
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn.active {
+            background-color: var(--btn-active);
+            color: var(--btn-active-text);
+            border-color: var(--btn-active);
+            font-weight: 800;
+            transform: scale(1.03);
+        }
+
+        .accent-text {
+            color: var(--accent-main);
+        }
+
+        .tip-box-custom {
+            background-color: var(--highlight-box);
+            border: 3px solid var(--accent-main);
+        }
+
+        .specimen-img-box {
+            background-color: var(--bg-inner-img);
+        }
+
+        .image-zoom-button:focus-visible,
+        .image-dialog-close:focus-visible {
+            outline: 3px solid var(--accent-main);
+            outline-offset: 3px;
+        }
+
+        .image-dialog {
+            max-width: min(95vw, 1200px);
+            max-height: 95vh;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: white;
+        }
+
+        .image-dialog-stage {
+            max-width: 90vw;
+            max-height: 75vh;
+            overflow: auto;
+            overscroll-behavior: contain;
+        }
+
+        .image-dialog::backdrop {
+            background: rgb(0 0 0 / 85%);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <!-- Przełącznik Palet Kolorystycznych (Dla Prowadzącego Lekcję) -->
+    <div class="max-w-6xl mx-auto mb-6 bg-slate-900/80 p-4 rounded-2xl border border-slate-700 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
+        <div class="flex items-center gap-2 text-sm md:text-base font-bold text-slate-200">
+            <i class="fa-solid fa-palette text-amber-400 text-xl"></i>
+            <span>Dostosuj tryb dla klasy / tablicy:</span>
+        </div>
+        <div class="flex flex-wrap gap-2 justify-center" id="theme-controls">
+            <button type="button" data-theme-choice="tree" aria-pressed="true" class="px-3 py-2 rounded-lg text-sm font-bold bg-amber-800 text-amber-100 border-2 border-amber-500 hover:opacity-90 transition">
+                <i class="fa-solid fa-mountain mr-1"></i> Ziemia i Drewno (domyślny)
+            </button>
+            <button type="button" data-theme-choice="high-contrast" aria-pressed="false" class="px-3 py-2 rounded-lg text-sm font-bold bg-black text-yellow-300 border-2 border-yellow-400 hover:opacity-90 transition">
+                <i class="fa-solid fa-eye mr-1"></i> Wysoki Kontrast
+            </button>
+            <button type="button" data-theme-choice="sage" aria-pressed="false" class="px-3 py-2 rounded-lg text-sm font-bold bg-emerald-900 text-emerald-200 border-2 border-emerald-400 hover:opacity-90 transition">
+                <i class="fa-solid fa-feather mr-1"></i> Spokojna Szałwia (ADHD)
+            </button>
+            <button type="button" data-theme-choice="ai" aria-pressed="false" class="px-3 py-2 rounded-lg text-sm font-bold bg-sky-950 text-sky-200 border-2 border-sky-400 hover:opacity-90 transition">
+                <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Motyw AI
+            </button>
+        </div>
+    </div>
+
+    <header class="max-w-6xl mx-auto mb-6 text-center">
+        <h1 class="text-4xl md:text-5xl font-black mb-2 accent-text tracking-tight">
+            <i class="fa-solid fa-gem mr-2"></i> Skarby Dolnego Śląska
+        </h1>
+        <p class="text-xl opacity-90 font-semibold">Baza Detektywa Geologicznego dla Szkoły Podstawowej</p>
+    </header>
+
+    <!-- Pasek Złotej Zasady (Test Wody) -->
+    <div class="max-w-6xl mx-auto mb-8 tip-box-custom p-5 rounded-2xl shadow-xl flex flex-col md:flex-row items-center gap-4">
+        <div class="text-4xl accent-text flex-shrink-0">
+            <i class="fa-solid fa-droplet mr-1"></i><i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="text-lg leading-relaxed">
+            <strong class="accent-text text-xl block mb-1">
+                <i class="fa-solid fa-lightbulb mr-2"></i> Złota Zasada Młodego Geologa:
+            </strong>
+            Skały i minerały najlepiej badać po <span class="bg-blue-600 text-white px-2 py-0.5 rounded font-bold">zmyciu pyłu wodą</span>! Gdy kamień jest lekko wilgotny, woda wypełnia mikroskopijne nierówności powierzchni, co drastycznie zwiększa nasycenie barw, uwypukla wzory w agatach i pozwala dostrzec blask kryształów.
+        </div>
+    </div>
+
+    <!-- Nawigacja kategorii jest generowana z katalogu okazów. -->
+    <nav id="category-navigation" aria-label="Kategorie okazów" class="max-w-6xl mx-auto mb-8 flex flex-wrap justify-center gap-3"></nav>
+
+    <main class="max-w-6xl mx-auto">
+        
+        <!-- ZAKŁADKA 1: PODSTAWY LEKCJI -->
+        <div id="tab-start" class="tab-content active">
+            <div class="theme-card rounded-2xl p-8 space-y-6">
+                <h2 class="text-3xl font-black accent-text pb-2 border-b border-stone-700">
+                    <i class="fa-solid fa-compass mr-2"></i> Jak badać minerały na dzisiejszej lekcji?
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-6 rounded-xl border-l-4 border-blue-500 bg-black/20 shadow-sm">
+                        <h3 class="text-xl font-bold mb-2 text-blue-400"><i class="fa-solid fa-hammer mr-2"></i> 1. Twardość</h3>
+                        <p class="opacity-90">Czy kamień można zarysować paznokciem (bardzo miękki)? Czy gwoździem (średni)? A może sam potrafi zarysować szkło (bardzo twardy, np. kwarc)?</p>
+                    </div>
+                    <div class="p-6 rounded-xl border-l-4 border-yellow-500 bg-black/20 shadow-sm">
+                        <h3 class="text-xl font-bold mb-2 text-yellow-400"><i class="fa-solid fa-eye mr-2"></i> 2. Połysk</h3>
+                        <p class="opacity-90">Skieruj światło na okaz. Czy błyszczy się jak potłuczone szkło (połysk szklisty)? Czy przypomina wosk (połysk woskowy)? A może jest matowy?</p>
+                    </div>
+                    <div class="p-6 rounded-xl border-l-4 border-emerald-500 bg-black/20 shadow-sm">
+                        <h3 class="text-xl font-bold mb-2 text-emerald-400"><i class="fa-solid fa-droplet mr-2"></i> 3. Test Wody</h3>
+                        <p class="opacity-90">Zmyj pył i obejrzyj kamień, gdy jest wilgotny. Kolory staną się bardziej wyraziste, a wzory łatwiejsze do rozpoznania.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mineral-categories"></div>
+
+    </main>
+
+    <dialog id="image-dialog" class="image-dialog rounded-xl">
+        <div class="relative flex max-h-[95vh] flex-col items-center rounded-xl bg-slate-950 p-4">
+            <button type="button" class="image-dialog-close absolute right-3 top-3 z-10 rounded-full bg-black/75 px-3 py-2 text-xl font-bold text-white hover:bg-black" aria-label="Zamknij powiększone zdjęcie">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+            <div class="image-dialog-stage flex items-center justify-center">
+                <img id="image-dialog-picture" class="flex-none rounded object-contain" alt="">
+            </div>
+            <div class="mt-3 flex items-center gap-3" aria-label="Sterowanie powiększeniem zdjęcia">
+                <button id="image-zoom-out" type="button" class="rounded-lg bg-slate-700 px-4 py-2 text-xl font-bold text-white hover:bg-slate-600" aria-label="Pomniejsz zdjęcie">−</button>
+                <button id="image-zoom-reset" type="button" class="rounded-lg bg-slate-700 px-4 py-2 font-bold text-white hover:bg-slate-600">Resetuj</button>
+                <button id="image-zoom-in" type="button" class="rounded-lg bg-slate-700 px-4 py-2 text-xl font-bold text-white hover:bg-slate-600" aria-label="Powiększ zdjęcie">+</button>
+            </div>
+            <p id="image-dialog-caption" class="mt-3 text-center text-lg font-bold"></p>
+        </div>
+    </dialog>
+
+    <script src="okazy.js"></script>
+    <script>
+        function setTheme(themeName) {
+            const themeButton = [...document.querySelectorAll('[data-theme-choice]')]
+                .find(button => button.dataset.themeChoice === themeName);
+            if (!themeButton) {
+                console.error(`Nieznany motyw: ${themeName}`);
+                return;
+            }
+            document.documentElement.setAttribute('data-theme', themeName);
+            document.querySelectorAll('[data-theme-choice]').forEach(button => {
+                button.setAttribute('aria-pressed', String(button.dataset.themeChoice === themeName));
+            });
+        }
+
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.toggle('active', tab.id === `tab-${tabName}`);
+            });
+            document.querySelectorAll('.nav-btn').forEach(button => {
+                const isActive = button.dataset.tab === tabName;
+                button.classList.toggle('active', isActive);
+                button.setAttribute('aria-pressed', String(isActive));
+            });
+        }
+
+        function renderCategories(categories) {
+            const navigation = document.getElementById('category-navigation');
+            const container = document.getElementById('mineral-categories');
+            const imageDialog = document.getElementById('image-dialog');
+            const dialogPicture = document.getElementById('image-dialog-picture');
+            const dialogCaption = document.getElementById('image-dialog-caption');
+            let imageBaseWidth = 0;
+            let imageZoom = 1;
+
+            function updateDialogImageSize() {
+                if (!imageBaseWidth) return;
+                dialogPicture.style.width = `${imageBaseWidth * imageZoom}px`;
+            }
+
+            function prepareDialogImage() {
+                if (!dialogPicture.naturalWidth || !dialogPicture.naturalHeight) return;
+                const fitScale = Math.min(
+                    1,
+                    (window.innerWidth * 0.9) / dialogPicture.naturalWidth,
+                    (window.innerHeight * 0.75) / dialogPicture.naturalHeight
+                );
+                imageBaseWidth = dialogPicture.naturalWidth * fitScale;
+                imageZoom = 1;
+                updateDialogImageSize();
+            }
+
+            imageDialog.addEventListener('click', event => {
+                if (event.target === imageDialog) imageDialog.close();
+            });
+            imageDialog.querySelector('.image-dialog-close').addEventListener('click', () => imageDialog.close());
+            dialogPicture.addEventListener('load', prepareDialogImage);
+            document.getElementById('image-zoom-in').addEventListener('click', () => {
+                imageZoom = Math.min(4, imageZoom + 0.25);
+                updateDialogImageSize();
+            });
+            document.getElementById('image-zoom-out').addEventListener('click', () => {
+                imageZoom = Math.max(0.5, imageZoom - 0.25);
+                updateDialogImageSize();
+            });
+            document.getElementById('image-zoom-reset').addEventListener('click', () => {
+                imageZoom = 1;
+                updateDialogImageSize();
+            });
+
+            const startButton = document.createElement('button');
+            startButton.type = 'button';
+            startButton.className = 'nav-btn active px-5 py-3 rounded-xl font-bold text-lg';
+            startButton.dataset.tab = 'start';
+            startButton.setAttribute('aria-controls', 'tab-start');
+            startButton.setAttribute('aria-pressed', 'true');
+            startButton.textContent = 'Podstawy';
+            startButton.addEventListener('click', () => openTab('start'));
+            navigation.append(startButton);
+
+            categories.forEach(category => {
+                if (!/^[a-z0-9-]+$/.test(category.id)) {
+                    throw new Error(`Nieprawidłowy identyfikator kategorii: ${category.id}`);
+                }
+
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'nav-btn px-5 py-3 rounded-xl font-bold text-lg';
+                button.dataset.tab = category.id;
+                button.setAttribute('aria-controls', `tab-${category.id}`);
+                button.setAttribute('aria-pressed', 'false');
+                button.textContent = category.label;
+                button.addEventListener('click', () => openTab(category.id));
+                navigation.append(button);
+
+                const section = document.createElement('section');
+                section.id = `tab-${category.id}`;
+                section.className = 'tab-content';
+                const panel = document.createElement('div');
+                panel.className = 'theme-card rounded-2xl p-8 space-y-6';
+
+                const heading = document.createElement('div');
+                heading.className = 'border-b border-stone-700 pb-4';
+                const title = document.createElement('h2');
+                title.className = `text-3xl font-black ${category.headingColor}`;
+                title.textContent = `${category.icon} ${category.title}`;
+                const subtitle = document.createElement('p');
+                subtitle.className = 'text-lg opacity-80 mt-1';
+                subtitle.textContent = category.description;
+                heading.append(title, subtitle);
+
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
+                category.specimens.forEach(specimen => {
+                    if (!/^[a-zA-Z0-9_-]+\.jpg$/.test(specimen.image)) {
+                        throw new Error(`Nieprawidłowa nazwa zdjęcia: ${specimen.image}`);
+                    }
+
+                    const card = document.createElement('article');
+                    card.className = 'theme-card rounded-xl overflow-hidden flex flex-col';
+                    const imageBox = document.createElement('div');
+                    imageBox.className = 'h-56 specimen-img-box p-3 flex items-center justify-center border-b border-stone-700';
+                    const zoomButton = document.createElement('button');
+                    zoomButton.type = 'button';
+                    zoomButton.className = 'image-zoom-button flex h-full w-full cursor-zoom-in items-center justify-center rounded focus-visible:outline';
+                    zoomButton.setAttribute('aria-label', `Powiększ zdjęcie: ${specimen.title}`);
+                    const image = document.createElement('img');
+                    image.src = `zdjecia/${specimen.image}`;
+                    image.alt = specimen.title;
+                    image.loading = 'lazy';
+                    image.className = 'max-h-full max-w-full object-contain rounded';
+                    image.addEventListener('error', () => console.error(`Nie można wczytać zdjęcia: ${image.src}`));
+                    zoomButton.append(image);
+                    zoomButton.addEventListener('click', () => {
+                        dialogPicture.src = image.src;
+                        dialogPicture.alt = specimen.title;
+                        dialogCaption.textContent = specimen.title;
+                        imageDialog.showModal();
+                        if (dialogPicture.complete) prepareDialogImage();
+                    });
+                    imageBox.append(zoomButton);
+
+                    const details = document.createElement('div');
+                    details.className = 'p-5 flex-grow';
+                    const badge = document.createElement('span');
+                    badge.className = `text-xs font-bold ${category.badgeColor} px-2.5 py-1 rounded-md`;
+                    badge.textContent = `Okaz #${specimen.number}`;
+                    const name = document.createElement('h3');
+                    name.className = `text-xl font-black ${category.specimenColor} mt-2 mb-1`;
+                    name.textContent = specimen.title;
+                    const description = document.createElement('p');
+                    description.className = 'opacity-90 text-sm';
+                    description.textContent = specimen.description;
+                    details.append(badge, name, description);
+                    card.append(imageBox, details);
+                    grid.append(card);
+                });
+
+                panel.append(heading, grid);
+                section.append(panel);
+                container.append(section);
+            });
+        }
+
+        document.getElementById('theme-controls').addEventListener('click', event => {
+            const button = event.target.closest('[data-theme-choice]');
+            if (button) setTheme(button.dataset.themeChoice);
+        });
+
+        renderCategories(window.MINERAL_CATEGORIES);
+    </script>
+</body>
+</html>
