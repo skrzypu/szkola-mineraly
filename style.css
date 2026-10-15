@@ -177,6 +177,31 @@ h1, h2, h3, p {
 .theme-card [class~="bg-amber-900"] { color: #fde68a; }
 .theme-card [class~="bg-emerald-900"] { color: #a7f3d0; }
 
+.site-footer {
+    max-width: 72rem;
+    margin: 2rem auto 0;
+    padding: 1.25rem 1rem;
+    border-top: 1px solid var(--border-card);
+    color: var(--text-muted);
+    text-align: center;
+    font-size: .875rem;
+    line-height: 1.5;
+}
+
+.site-footer p + p {
+    margin-top: .25rem;
+}
+
+.site-footer a {
+    color: var(--accent-light);
+    text-underline-offset: .2em;
+}
+
+.site-footer a:focus-visible {
+    outline: 2px solid var(--accent-main);
+    outline-offset: 3px;
+}
+
 .image-dialog > div { max-height: 95vh; }
 .image-dialog-stage { margin: 0 auto; }
 
