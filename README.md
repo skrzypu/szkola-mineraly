@@ -20,19 +20,24 @@ Wszystkie eksponaty ujęte w bazie zostały znalezione w następujących rejonac
 > **Skały i minerały najlepiej badać po zmyciu pyłu wodą!** Gdy kamień jest lekko wilgotny, woda wypełnia mikroskopijne nierówności powierzchni, co drastycznie zwiększa nasycenie barw i pozwala dostrzec blask kryształów.
 
 ## 💻 Struktura i Wdrożenie
-Projekt jest statyczną aplikacją typu **Single-Page Application (SPA)** napisaną w HTML, CSS (Tailwind) i JavaScript. Stworzony przy wsparciu sztucznej inteligencji **Gemini**.
+Projekt jest statyczną aplikacją typu **Single-Page Application (SPA)** napisaną w HTML, CSS i JavaScript. Nie wymaga instalowania zależności ani budowania. Nie korzysta z zewnętrznych bibliotek, czcionek ani ikon — wszystkie potrzebne pliki znajdują się w repozytorium.
 
 - [index.html](index.html) zawiera układ strony, style motywów i kod renderowania.
+- [style.css](style.css) zawiera lokalne style strony.
 - [okazy.js](okazy.js) zawiera dane kategorii i okazów; zdjęcia są w katalogu [zdjecia/](zdjecia/).
 - Wygląd wspólny dla kart używa zmiennych CSS, dzięki czemu zmiana motywu nie wymaga edycji każdego elementu.
+
+### Uruchamianie offline
+
+Pobierz lub skopiuj cały folder projektu, zachowując jego strukturę, a następnie otwórz `index.html` w przeglądarce. Strona, style, skrypt z danymi i zdjęcia są lokalne — do działania katalogu nie jest potrzebne połączenie z internetem. Internet jest potrzebny tylko do otwarcia strony bezpośrednio z adresu GitHub Pages; lokalnie pobrana kopia działa offline.
 
 ### Dodawanie okazów i kategorii
 
 1. Umieść plik JPG w `zdjecia/`.
-2. Dopisz okaz do `specimens` właściwej kategorii w `okazy.js`, podając `number`, nazwę pliku (`image`), `title` i `description`.
-3. Nową kategorię dodaj jako kolejny obiekt w `MINERAL_CATEGORIES`, kopiując strukturę istniejącej. Nawigacja i karty wygenerują się automatycznie.
+2. Dopisz okaz do `specimens` właściwej kategorii w `okazy.js`, podając `number`, nazwę pliku (`image`), `title`, `description` i krótką ciekawostkę dla dzieci (`funFact`).
+3. Nową kategorię dodaj jako kolejny obiekt w `MINERAL_CATEGORIES`, kopiując strukturę istniejącej. Podaj też `placeDescription` i `placeFact`, by krótko przedstawić miejsce oraz ciekawostkę o nim. Nawigacja i karty wygenerują się automatycznie.
 
-Opisy i nazwy zdjęć są wstawiane jako tekst, a nazwa pliku zdjęcia musi być zwykłą nazwą JPG (bez ścieżek). Nie dodawaj HTML ani skryptów do danych okazów.
+Opisy, ciekawostki i nazwy zdjęć są wstawiane jako tekst, a nazwa pliku zdjęcia musi być zwykłą nazwą JPG (bez ścieżek). Nie dodawaj HTML ani skryptów do danych okazów.
 
 ### Dodawanie motywu
 
@@ -42,10 +47,10 @@ Dodaj blok `html[data-theme="id"]` z wartościami zmiennych CSS w `index.html` o
 
 To mała, statyczna strona, a nie pełna architektura SOLID: rozdzielenie danych okazów od widoku upraszcza rozwój, ale HTML nadal odpowiada za układ i logikę renderowania. Dodawanie okazów i kategorii jest teraz niezależne od powielania kart HTML; dodanie motywu wymaga zmiany palety CSS i dodania przycisku.
 
-Strona nie ma backendu, logowania ani formularzy, więc nie przetwarza danych użytkowników. Katalog jest statyczny, a treści okazów trafiają do DOM przez `textContent`, nie przez interpretację HTML. Nie oznacza to pełnej gwarancji bezpieczeństwa: Tailwind, Google Fonts i Font Awesome są pobierane z zewnętrznych CDN bez SRI, więc wdrożenie zależy od zaufania do tych dostawców i dostępu do sieci. Przy wdrożeniu produkcyjnym warto przypiąć wersje lub hostować zasoby lokalnie.
+Strona nie ma backendu, logowania ani formularzy i nie zbiera danych użytkowników. Opisy okazów są wstawiane do strony jako tekst (`textContent`), a nie interpretowane jako HTML. Strona nie pobiera kodu, czcionek ani ikon z zewnętrznych serwisów, więc po skopiowaniu całego folderu działa również bez internetu. Jak przy każdej stronie otwieranej lokalnie, należy używać zaufanych plików projektu.
 
 ## 📜 Licencja
 
-Ten projekt jest udostępniany na licencji **Creative Commons Uznanie autorstwa - Użycie niekomercyjne - Na tych samych warunkach 4.0 Międzynarodowe (CC BY-NC-SA 4.0)**.
+Ten projekt, w tym zdjęcia okazów będące własnością autora projektu, jest udostępniany na licencji **Creative Commons Uznanie autorstwa - Użycie niekomercyjne - Na tych samych warunkach 4.0 Międzynarodowe (CC BY-NC-SA 4.0)**. Przy wykorzystaniu należy podać autorstwo i zachować warunki tej licencji.
 
 Szczegółowy tekst licencji znajdziesz w pliku [LICENSE](LICENSE) w tym repozytorium.

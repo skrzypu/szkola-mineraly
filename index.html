@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skarby Dolnego Śląska – Minerały i Skamieniałości</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     
     <style>
         /* ==========================================================================
@@ -78,7 +76,7 @@
         body {
             background-color: var(--bg-body);
             color: var(--text-main);
-            font-family: 'Nunito', sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
@@ -142,19 +140,31 @@
         }
 
         .image-dialog {
+            width: min(95vw, 1200px);
             max-width: min(95vw, 1200px);
             max-height: 95vh;
             padding: 0;
             border: 0;
             background: transparent;
             color: white;
+            box-sizing: border-box;
         }
 
         .image-dialog-stage {
+            display: block;
+            width: min(90vw, 1160px);
+            height: 70vh;
             max-width: 90vw;
-            max-height: 75vh;
+            max-height: calc(95vh - 150px);
             overflow: auto;
             overscroll-behavior: contain;
+            touch-action: pan-x pan-y;
+        }
+
+        #image-dialog-picture {
+            display: block;
+            max-width: none;
+            margin-inline: auto;
         }
 
         .image-dialog::backdrop {
@@ -167,28 +177,28 @@
     <!-- Przełącznik Palet Kolorystycznych (Dla Prowadzącego Lekcję) -->
     <div class="max-w-6xl mx-auto mb-6 bg-slate-900/80 p-4 rounded-2xl border border-slate-700 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
         <div class="flex items-center gap-2 text-sm md:text-base font-bold text-slate-200">
-            <i class="fa-solid fa-palette text-amber-400 text-xl"></i>
+            <span class="text-amber-400 text-xl" aria-hidden="true">🎨</span>
             <span>Dostosuj tryb dla klasy / tablicy:</span>
         </div>
         <div class="flex flex-wrap gap-2 justify-center" id="theme-controls">
             <button type="button" data-theme-choice="tree" aria-pressed="true" class="px-3 py-2 rounded-lg text-sm font-bold bg-amber-800 text-amber-100 border-2 border-amber-500 hover:opacity-90 transition">
-                <i class="fa-solid fa-mountain mr-1"></i> Ziemia i Drewno (domyślny)
+                <span class="mr-1" aria-hidden="true">🌳</span> Ziemia i Drewno (domyślny)
             </button>
             <button type="button" data-theme-choice="high-contrast" aria-pressed="false" class="px-3 py-2 rounded-lg text-sm font-bold bg-black text-yellow-300 border-2 border-yellow-400 hover:opacity-90 transition">
-                <i class="fa-solid fa-eye mr-1"></i> Wysoki Kontrast
+                <span class="mr-1" aria-hidden="true">👁️</span> Wysoki Kontrast
             </button>
             <button type="button" data-theme-choice="sage" aria-pressed="false" class="px-3 py-2 rounded-lg text-sm font-bold bg-emerald-900 text-emerald-200 border-2 border-emerald-400 hover:opacity-90 transition">
-                <i class="fa-solid fa-feather mr-1"></i> Spokojna Szałwia (ADHD)
+                <span class="mr-1" aria-hidden="true">🪶</span> Spokojna Szałwia (ADHD)
             </button>
             <button type="button" data-theme-choice="ai" aria-pressed="false" class="px-3 py-2 rounded-lg text-sm font-bold bg-sky-950 text-sky-200 border-2 border-sky-400 hover:opacity-90 transition">
-                <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Motyw AI
+                <span class="mr-1" aria-hidden="true">✨</span> Motyw AI
             </button>
         </div>
     </div>
 
     <header class="max-w-6xl mx-auto mb-6 text-center">
         <h1 class="text-4xl md:text-5xl font-black mb-2 accent-text tracking-tight">
-            <i class="fa-solid fa-gem mr-2"></i> Skarby Dolnego Śląska
+            <span class="mr-2" aria-hidden="true">💎</span> Skarby Dolnego Śląska
         </h1>
         <p class="text-xl opacity-90 font-semibold">Baza Detektywa Geologicznego dla Szkoły Podstawowej</p>
     </header>
@@ -196,11 +206,11 @@
     <!-- Pasek Złotej Zasady (Test Wody) -->
     <div class="max-w-6xl mx-auto mb-8 tip-box-custom p-5 rounded-2xl shadow-xl flex flex-col md:flex-row items-center gap-4">
         <div class="text-4xl accent-text flex-shrink-0">
-            <i class="fa-solid fa-droplet mr-1"></i><i class="fa-solid fa-magnifying-glass"></i>
+            <span class="mr-1" aria-hidden="true">💧🔍</span>
         </div>
         <div class="text-lg leading-relaxed">
             <strong class="accent-text text-xl block mb-1">
-                <i class="fa-solid fa-lightbulb mr-2"></i> Złota Zasada Młodego Geologa:
+                <span class="mr-2" aria-hidden="true">💡</span> Złota Zasada Młodego Geologa:
             </strong>
             Skały i minerały najlepiej badać po <span class="bg-blue-600 text-white px-2 py-0.5 rounded font-bold">zmyciu pyłu wodą</span>! Gdy kamień jest lekko wilgotny, woda wypełnia mikroskopijne nierówności powierzchni, co drastycznie zwiększa nasycenie barw, uwypukla wzory w agatach i pozwala dostrzec blask kryształów.
         </div>
@@ -215,20 +225,20 @@
         <div id="tab-start" class="tab-content active">
             <div class="theme-card rounded-2xl p-8 space-y-6">
                 <h2 class="text-3xl font-black accent-text pb-2 border-b border-stone-700">
-                    <i class="fa-solid fa-compass mr-2"></i> Jak badać minerały na dzisiejszej lekcji?
+                    <span class="mr-2" aria-hidden="true">🧭</span> Jak badać minerały na dzisiejszej lekcji?
                 </h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="p-6 rounded-xl border-l-4 border-blue-500 bg-black/20 shadow-sm">
-                        <h3 class="text-xl font-bold mb-2 text-blue-400"><i class="fa-solid fa-hammer mr-2"></i> 1. Twardość</h3>
+                        <h3 class="text-xl font-bold mb-2 text-blue-400"><span class="mr-2" aria-hidden="true">🔨</span> 1. Twardość</h3>
                         <p class="opacity-90">Czy kamień można zarysować paznokciem (bardzo miękki)? Czy gwoździem (średni)? A może sam potrafi zarysować szkło (bardzo twardy, np. kwarc)?</p>
                     </div>
                     <div class="p-6 rounded-xl border-l-4 border-yellow-500 bg-black/20 shadow-sm">
-                        <h3 class="text-xl font-bold mb-2 text-yellow-400"><i class="fa-solid fa-eye mr-2"></i> 2. Połysk</h3>
+                        <h3 class="text-xl font-bold mb-2 text-yellow-400"><span class="mr-2" aria-hidden="true">👁️</span> 2. Połysk</h3>
                         <p class="opacity-90">Skieruj światło na okaz. Czy błyszczy się jak potłuczone szkło (połysk szklisty)? Czy przypomina wosk (połysk woskowy)? A może jest matowy?</p>
                     </div>
                     <div class="p-6 rounded-xl border-l-4 border-emerald-500 bg-black/20 shadow-sm">
-                        <h3 class="text-xl font-bold mb-2 text-emerald-400"><i class="fa-solid fa-droplet mr-2"></i> 3. Test Wody</h3>
+                        <h3 class="text-xl font-bold mb-2 text-emerald-400"><span class="mr-2" aria-hidden="true">💧</span> 3. Test Wody</h3>
                         <p class="opacity-90">Zmyj pył i obejrzyj kamień, gdy jest wilgotny. Kolory staną się bardziej wyraziste, a wzory łatwiejsze do rozpoznania.</p>
                     </div>
                 </div>
@@ -242,9 +252,9 @@
     <dialog id="image-dialog" class="image-dialog rounded-xl">
         <div class="relative flex max-h-[95vh] flex-col items-center rounded-xl bg-slate-950 p-4">
             <button type="button" class="image-dialog-close absolute right-3 top-3 z-10 rounded-full bg-black/75 px-3 py-2 text-xl font-bold text-white hover:bg-black" aria-label="Zamknij powiększone zdjęcie">
-                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                <span aria-hidden="true">×</span>
             </button>
-            <div class="image-dialog-stage flex items-center justify-center">
+            <div class="image-dialog-stage">
                 <img id="image-dialog-picture" class="flex-none rounded object-contain" alt="">
             </div>
             <div class="mt-3 flex items-center gap-3" aria-label="Sterowanie powiększeniem zdjęcia">
@@ -300,12 +310,13 @@
                 if (!dialogPicture.naturalWidth || !dialogPicture.naturalHeight) return;
                 const fitScale = Math.min(
                     1,
-                    (window.innerWidth * 0.9) / dialogPicture.naturalWidth,
-                    (window.innerHeight * 0.75) / dialogPicture.naturalHeight
+                    (window.innerWidth * 0.85) / dialogPicture.naturalWidth,
+                    (window.innerHeight * 0.65) / dialogPicture.naturalHeight
                 );
                 imageBaseWidth = dialogPicture.naturalWidth * fitScale;
                 imageZoom = 1;
                 updateDialogImageSize();
+                imageDialog.querySelector('.image-dialog-stage').scrollTo(0, 0);
             }
 
             imageDialog.addEventListener('click', event => {
@@ -367,6 +378,23 @@
                 subtitle.textContent = category.description;
                 heading.append(title, subtitle);
 
+                const placeInfo = document.createElement('div');
+                placeInfo.className = 'tip-box-custom rounded-xl p-4';
+                const placeHeading = document.createElement('h3');
+                placeHeading.className = 'text-lg font-black';
+                placeHeading.textContent = 'Poznaj to miejsce';
+                const placeDescription = document.createElement('p');
+                placeDescription.className = 'mt-1';
+                placeDescription.textContent = category.placeDescription;
+                const placeFact = document.createElement('p');
+                placeFact.className = 'mt-2 text-sm';
+                const placeFactLabel = document.createElement('strong');
+                placeFactLabel.textContent = 'Ciekawostka: ';
+                const placeFactText = document.createElement('span');
+                placeFactText.textContent = category.placeFact;
+                placeFact.append(placeFactLabel, placeFactText);
+                placeInfo.append(placeHeading, placeDescription, placeFact);
+
                 const grid = document.createElement('div');
                 grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
                 category.specimens.forEach(specimen => {
@@ -409,12 +437,22 @@
                     const description = document.createElement('p');
                     description.className = 'opacity-90 text-sm';
                     description.textContent = specimen.description;
-                    details.append(badge, name, description);
+                    const funFact = document.createElement('p');
+                    funFact.className = 'mt-3 rounded-lg border-l-4 p-3 text-sm';
+                    funFact.style.backgroundColor = 'var(--highlight-box)';
+                    funFact.style.borderColor = 'var(--accent-main)';
+                    const funFactLabel = document.createElement('strong');
+                    funFactLabel.className = 'mb-1 block';
+                    funFactLabel.textContent = 'Czy wiesz, że?';
+                    const funFactText = document.createElement('span');
+                    funFactText.textContent = specimen.funFact;
+                    funFact.append(funFactLabel, funFactText);
+                    details.append(badge, name, description, funFact);
                     card.append(imageBox, details);
                     grid.append(card);
                 });
 
-                panel.append(heading, grid);
+                panel.append(heading, placeInfo, grid);
                 section.append(panel);
                 container.append(section);
             });
