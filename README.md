@@ -2,6 +2,8 @@
 
 Edukacyjna, interaktywna baza wiedzy oraz katalog okazów geologicznych stworzony z myślą o uczniach szkoły podstawowej (klasy 4–6, ok. 10 lat) do prezentacji na tablicach interaktywnych podczas lekcji przyrody i geografii.
 
+**Otwórz stronę:** [skrzypu.github.io/szkola-mineraly](https://skrzypu.github.io/szkola-mineraly/)
+
 ## 🎯 Cel Projektu
 
 Projekt powstał, aby w przystępny, wizualny i angażujący sposób zaprezentować dzieciom autentyczne znaleziska geologiczne pochodzące z polskiej części Dolnego Śląska.
